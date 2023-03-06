@@ -5,8 +5,11 @@ function _init()
   grid_size=8
 		pl_sprs={1,2,3,2}
   pl={
-    x=1,
-    y=1,
+    x=grid_size,
+    y=grid_size,
+    destx=grid_size,
+    desty=grid_size,
+    dests{},
   }
 end
 
@@ -30,20 +33,32 @@ end
 
 function update_player()
   if btnp(⬅️) then
-    pl.x-=1
+    pl.destx-=grid_size
   elseif btnp(➡️) then
-    pl.x+=1
+    pl.destx+=grid_size
   elseif btnp(⬇️) then
-    pl.y+=1
+    pl.desty+=grid_size
   elseif btnp(⬆️) then
+    pl.desty-=grid_size
+  end
+  if pl.destx>pl.x then
+    pl.x+=1
+  elseif pl.destx<pl.x then
+    pl.x-=1
+  end
+  if pl.desty>pl.y then
+    pl.y+=1
+  elseif pl.desty<pl.y then
     pl.y-=1
   end
   add(dbg,"x="..tostr(pl.x))
+  add(dbg,"destx="..tostr(pl.destx))
   add(dbg,"y="..tostr(pl.y))
+  add(dbg,"desty="..tostr(pl.desty))
 end
 
 function draw_player()
-  spr(cycle(pl_sprs,time(),5),pl.x*grid_size,pl.y*grid_size)
+  spr(cycle(pl_sprs,time(),5),pl.x,pl.y)
 end
 
 -->8
